@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) 
+    {
+        unordered_set<string> seen;
+
+        for (int i = 0; i < 9; i++) 
+        {
+            for (int j = 0; j < 9; j++) 
+            {
+                char num = board[i][j];
+                if (num != '.') 
+                {
+                    string numStr(1, num);  
+
+                    string row_key = to_string(i) + "(" + numStr + ")";
+                    string col_key = "(" + numStr + ")" + to_string(j);
+                    string box_key = to_string(i / 3) + "(" + numStr + ")" + to_string(j / 3);
+
+                    if (seen.count(row_key) || seen.count(col_key) || seen.count(box_key)) 
+                    {
+                        return false;
+                    }
+
+                    seen.insert(row_key);
+                    seen.insert(col_key);
+                    seen.insert(box_key);
+                }
+            }
+        }
+
+        return true;
+    }
+};
